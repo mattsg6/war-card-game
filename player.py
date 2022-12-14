@@ -59,9 +59,4 @@ class Player:
         print(f"Cards available for battle...... {len(self.war_cards)}")
         print(f"Cards vunlerable to attack...... {len(self.stack_cards)}")
         print(f"Total cards: {self.total}")
-        if(self.total < 26):
-            print("You are losing the war!")
-        else:
-            print("You are safe... for now")
-
         print("--------------------")
