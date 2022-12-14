@@ -1,3 +1,4 @@
 __pycache__/
 *.pyc
-war_card_game.egg-info/
+cardpackage.egg-info/
+build/
