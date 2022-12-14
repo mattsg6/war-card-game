@@ -1,15 +1,20 @@
 from card import Card
 from player import Player
 from table import Table
+import time
 
-def battle(player1: Player, player2: Player, table: Table):
+def battle(player1: Player, player2: Player, table: Table, pause: bool):
     """Returns TRUE if player1 wins and FALSE otherwise"""
 
     # Get cards that will battle
-    card1: Card = player1.nextCard()
-    print(f"{player1.name} card: {card1} ({card1.rank})")
+    if(pause):
+        input("Press any key to reveal the cards\n")
     card2: Card = player2.nextCard()
-    print(f"{player2.name} card: {card2} ({card2.rank})")
+    print(f"{player2.name}'s card: {card2}")
+    print("vs.\n")
+    card1: Card = player1.nextCard()
+    print(f"{player1.name}'s card: {card1}",end=" ")
+    time.sleep(1)
 
     # Set the table with the battling cards
     table.setTwoCards(card1, card2)
@@ -17,9 +22,9 @@ def battle(player1: Player, player2: Player, table: Table):
     # Card1 wins
     if(card1.rank > card2.rank):
         # Check to see if stack can be stolen
-        if(card1 == player2.showTopStack()):
+        if(player2.showTopStack() is not None and card1.rank == player2.showTopStack().rank):
             # Steal the stack
-            print(f"{player1.name} has stolen!")
+            print(f"\n{player1.name} has stolen!\n")
             stealStack(player1, player2)
 
         # Add cards to winner's stack ensuring winning card is on top
@@ -35,8 +40,8 @@ def battle(player1: Player, player2: Player, table: Table):
     # Card2 wins
     elif(card2.rank > card1.rank):
         # Check to see if stack can be stolen
-        if(card2 == player1.showTopStack()):
-            print(f"{player2.name} has stolen!")
+        if(player1.showTopStack() is not None and card2.rank == player1.showTopStack().rank):
+            print(f"\n{player2.name} has stolen!\n")
             # Steal the stack
             stealStack(player2, player1)
 
@@ -52,10 +57,11 @@ def battle(player1: Player, player2: Player, table: Table):
 
     # Cards are equal go to war
     else:
-        print("\nA war!\n")
+        print("""\n
+█░█░█ ▄▀█ █▀█
+▀▄▀▄▀ █▀█ █▀▄
+        \n""")
         return war(player1, player2, table)
-
-    return "ERROR"
 
 
 def war(player1: Player, player2: Player, table: Table):
@@ -82,12 +88,81 @@ def war(player1: Player, player2: Player, table: Table):
     player2.checkAndSwap()
     # Set table
     table.setMultiCards(p1_cards, p2_cards)
-    print(table)
         
     # Do battle again
-    return battle(player1, player2, table)
+    return battle(player1, player2, table, False)
 
 def stealStack(thief: Player, victim: Player):
     """Steal opponent's stack"""
     thief.stack_cards.extend(victim.stack_cards)
-    
+    victim.stack_cards.clear()
+    thief.updateTotal()
+    victim.updateTotal()
+
+def gameIntro():
+    print("""\n
+█▄█ █▀█ █░█  █░█ ▄▀█ █░█ █▀▀  ░░█ █░█ █▀ ▀█▀  █▀▄ █▀▀ █▀▀ █░░ ▄▀█ █▀█ █▀▀ █▀▄
+░█░ █▄█ █▄█  █▀█ █▀█ ▀▄▀ ██▄  █▄█ █▄█ ▄█ ░█░  █▄▀ ██▄ █▄▄ █▄▄ █▀█ █▀▄ ██▄ █▄▀
+""", end=" ")
+    time.sleep(1.5)
+    print(
+    """
+\t\t░██╗░░░░░░░██╗░█████╗░██████╗░
+\t\t░██║░░██╗░░██║██╔══██╗██╔══██╗
+\t\t░╚██╗████╗██╔╝███████║██████╔╝
+\t\t░░████╔═████║░██╔══██║██╔══██╗
+\t\t░░╚██╔╝░╚██╔╝░██║░░██║██║░░██║
+\t\t░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚═╝░░╚═╝    
+    """)
+    time.sleep(1)
+
+def initiate():
+    time.sleep(1)
+    print("\nPrepare yourself")
+    time.sleep(1)
+    print("""\n
+\t██████╗░
+\t╚════██╗
+\t░█████╔╝
+\t░╚═══██╗
+\t██████╔╝
+\t╚═════╝░""")
+    time.sleep(1.5)
+    print("""\n
+
+\t\t██████╗░
+\t\t╚════██╗
+\t\t░░███╔═╝
+\t\t██╔══╝░░
+\t\t███████╗
+\t\t╚══════╝
+    """)
+    time.sleep(1.5)
+    print("""\n
+
+\t\t\t░░███╗░░
+\t\t\t░████║░░
+\t\t\t██╔██║░░
+\t\t\t╚═╝██║░░
+\t\t\t███████╗
+\t\t\t╚══════╝
+    """)
+    time.sleep(1.5)
+    print("""\n
+██████╗░███████╗░██████╗░██╗███╗░░██╗
+██╔══██╗██╔════╝██╔════╝░██║████╗░██║
+██████╦╝█████╗░░██║░░██╗░██║██╔██╗██║
+██╔══██╗██╔══╝░░██║░░╚██╗██║██║╚████║
+██████╦╝███████╗╚██████╔╝██║██║░╚███║
+╚═════╝░╚══════╝░╚═════╝░╚═╝╚═╝░░╚══╝
+    """)
+
+def gameOver():
+        print("""\n
+░██████╗░░█████╗░███╗░░░███╗███████╗ ░█████╗░██╗░░░██╗███████╗██████╗░
+██╔════╝░██╔══██╗████╗░████║██╔════╝ ██╔══██╗██║░░░██║██╔════╝██╔══██╗
+██║░░██╗░███████║██╔████╔██║█████╗░░ ██║░░██║╚██╗░██╔╝█████╗░░██████╔╝
+██║░░╚██╗██╔══██║██║╚██╔╝██║██╔══╝░░ ██║░░██║░╚████╔╝░██╔══╝░░██╔══██╗
+╚██████╔╝██║░░██║██║░╚═╝░██║███████╗ ╚█████╔╝░░╚██╔╝░░███████╗██║░░██║
+░╚═════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝╚══════╝ ░╚════╝░░░░╚═╝░░░╚══════╝╚═╝░░╚═╝
+        \n""")

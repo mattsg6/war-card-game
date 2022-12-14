@@ -18,10 +18,6 @@ class Player:
         self.total = len(self.war_cards) - 1 + len(self.stack_cards)
         return self.war_cards.pop(len(self.war_cards) - 1)
 
-    def stackToWar(self):
-        self.war_cards = self.stack_cards.reverse()
-        self.stack_cards.clear()
-
     def addStack(self, card: Card):
         self.stack_cards.append(card)
         self.total = len(self.war_cards) + len(self.stack_cards)
@@ -38,7 +34,9 @@ class Player:
 
     def checkAndSwap(self):
         if(len(self.war_cards) == 0 and len(self.stack_cards) != 0):
-            self.stackToWar()
+            self.stack_cards.reverse()
+            self.war_cards.extend(self.stack_cards)
+            self.stack_cards.clear()
 
     def displayCards(self):
         name_stack = list()
@@ -51,3 +49,19 @@ class Player:
             name_war_cards.append(card.getName())
 
         print(f"\n{self.name}\nWar Cards: {name_war_cards}\nStack: {name_stack}")
+
+    def updateTotal(self):
+        self.total = len(self.stack_cards) + len(self.war_cards)
+
+    def gameStats(self):
+        print(f"\n{self.name} Stats")
+        print("--------------------")
+        print(f"Cards available for battle...... {len(self.war_cards)}")
+        print(f"Cards vunlerable to attack...... {len(self.stack_cards)}")
+        print(f"Total cards: {self.total}")
+        if(self.total < 26):
+            print("You are losing the war!")
+        else:
+            print("You are safe... for now")
+
+        print("--------------------")
