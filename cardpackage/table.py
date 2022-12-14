@@ -1,5 +1,5 @@
-from card import Card
-from player import Player
+from cardpackage.card import Card
+from cardpackage.player import Player
 
 class Table:
 

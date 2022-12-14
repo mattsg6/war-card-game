@@ -1,4 +1,4 @@
-from card import Card
+from cardpackage.card import Card
 
 
 """Tracker for player items"""

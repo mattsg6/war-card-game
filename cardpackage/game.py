@@ -1,6 +1,6 @@
-from card import Card
-from player import Player
-from table import Table
+from cardpackage.card import Card
+from cardpackage.player import Player
+from cardpackage.table import Table
 import time
 
 def battle(player1: Player, player2: Player, table: Table, pause: bool):

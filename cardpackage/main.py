@@ -1,6 +1,6 @@
-from player import Player
-from card import Card
-from game import *
+from cardpackage.player import Player
+from cardpackage.card import Card
+from cardpackage.game import *
 import random
 
 def main() -> None:
