@@ -100,9 +100,5 @@ def main() -> None:
     gameOver()
 
 
-def cmd_start(args=None):
+def cmd_start():
     main()
-
-
-if __name__ == "__main__":
-    cmd_start()
