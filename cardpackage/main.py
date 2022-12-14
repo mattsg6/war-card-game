@@ -1,4 +1,3 @@
-__version__ = 'dev'
 from player import Player
 from card import Card
 from game import *
