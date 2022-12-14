@@ -1,8 +1,8 @@
+__version__ = 'dev'
 from player import Player
 from card import Card
 from game import *
 import random
-__version__ = 'dev'
 
 def main() -> None:
     # Game intro sequence
