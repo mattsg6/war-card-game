@@ -14,7 +14,7 @@ setup(
 
     entry_points={
     'console_scripts': [
-        'play-war=my_pip_package.__init__:cmd_start',
+        'play-war=main.__init__:cmd_start',
     ],
 },
 )

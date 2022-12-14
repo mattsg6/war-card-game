@@ -105,6 +105,4 @@ def cmd_start(args=None):
 
 
 if __name__ == "__main__":
-    main()
-else:
-    print(__name__)
+    cmd_start()
