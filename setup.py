@@ -1,4 +1,4 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 from main import __version__
 
@@ -10,5 +10,11 @@ setup(
     author='Matthew Gilmore',
     author_email='thegilmores.matt@gmail.com',
 
-    py_modules=['main'],
+    ppackages=find_packages(),
+
+    entry_points={
+    'console_scripts': [
+        'play-war=my_pip_package.__init__:cmd_start',
+    ],
+},
 )
